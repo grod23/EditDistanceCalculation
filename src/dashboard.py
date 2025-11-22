@@ -25,7 +25,7 @@ class Dashboard:
         self.create_buttons()
         # Text
         (ttk.Label(self.dash, text='Please input two words for the edit distance')
-         .grid(column=0, row=1, columnspan=3, pady=10))
+         .grid(column=0, row=1, columnspan=1, pady=0))
         # Dashboard Grid
         self.dash.grid()
         # Run main loop
@@ -33,24 +33,27 @@ class Dashboard:
 
     def create_buttons(self):
         # Exit button
-        ttk.Button(self.dash, text='QUIT', command=self.root.destroy).grid(column=2, row=0)
+        ttk.Button(self.dash, text='QUIT', command=self.root.destroy).grid(column=2, row=7)
         # Submit Button
-        ttk.Button(self.dash, text='Submit', command=self.display_results).grid(column=2, row=1)
+        ttk.Button(self.dash, text='Submit', command=self.display_results).grid(column=0, row=7)
         # Clear Button
-        ttk.Button(self.dash, text='Clear', command=self.clear_entries).grid(column=3, row=1)
+        ttk.Button(self.dash, text='Clear', command=self.clear_entries).grid(column=1, row=7)
         # Entry boxes
-        self.entry_1.grid(column=0, row=1, padx=5, pady=5)
-        self.entry_2.grid(column=0, row=2, padx=5, pady=5)
+        self.entry_1.grid(column=0, row=3, padx=0, pady=0)
+        self.entry_2.grid(column=0, row=4, padx=0, pady=0)
 
     def create_entries(self):
+        # Labels
+        ttk.Label(self.dash, text="First Word:").grid(column=0, row=3, sticky=W, pady=5)
+        ttk.Label(self.dash, text="Second Word:").grid(column=0, row=4, sticky=W, pady=5)
+
         # Entry boxes
         entry_1 = ttk.Entry(self.dash, width=30)
         entry_2 = ttk.Entry(self.dash, width=30)
-        # Labels for entry boxes
-        ttk.Label(self.dash, text="First Word:").grid(column=0, row=1, sticky=W, padx=5, pady=5)
-        entry_1.grid(column=1, row=1, padx=5, pady=5)
-        ttk.Label(self.dash, text="Second Word:").grid(column=0, row=2, sticky=W, padx=5, pady=5)
-        entry_2.grid(column=1, row=2, padx=5, pady=5)
+
+        entry_1.grid(column=1, row=1, padx=0, pady=0)
+        entry_2.grid(column=1, row=2, padx=0, pady=0)
+
         return entry_1, entry_2
 
     def get_input(self):
@@ -72,10 +75,24 @@ class Dashboard:
     def calculate_edit_distance(self):
         word_1, word_2 = self.get_input()
         distance, matrix = self.calculate.calculate_edit_distance(word_1, word_2)
-        return distance, matrix
+        return distance, matrix, word_1, word_2
 
     def display_results(self):
-        distance, matrix = self.calculate_edit_distance()
+        distance, matrix, word_1, word_2 = self.calculate_edit_distance()
+        matrix_display = ttk.Label(
+            self.dash,
+            text=self.calculate.display_matrix(word_1, word_2)
+        )
+        matrix_display['font'] = ('Courier New', 8)  # Monospace font
+        matrix_display.grid(column=0, row=5, columnspan=2, pady=20)
+
+        alignment_display = ttk.Label(
+            self.dash,
+            text=self.calculate.display_alignment()
+        )
+        alignment_display['font'] = ('Courier New', 8)
+        alignment_display.grid(column=0, row=8, columnspan=2, pady=20)
+
 
     def clear_entries(self):
         """Clear the entry boxes and result label"""

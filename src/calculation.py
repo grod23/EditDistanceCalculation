@@ -5,7 +5,7 @@ class Calculation:
         self.alignment = []
 
     def calculate_edit_distance(self, word_1, word_2):
-        """Calculate edit distance using dynamic programming (Levenshtein distance)"""
+        """Calculate edit distance using (Levenshtein distance)"""
         rows = len(word_1) + 1
         cols = len(word_2) + 1
 
@@ -34,7 +34,6 @@ class Calculation:
 
         self.distance = self.matrix[rows - 1][cols - 1]
         self._traceback(word_1, word_2)
-
         return self.distance, self.matrix
 
     def _traceback(self, word_1, word_2):
@@ -58,44 +57,48 @@ class Calculation:
                 j -= 1
             elif j > 0 and self.matrix[i][j] == self.matrix[i][j - 1] + 1:
                 # Insertion
-                align_1.append('-')
+                align_1.append('_')
                 align_2.append(word_2[j - 1])
                 j -= 1
             else:
                 # Deletion
                 align_1.append(word_1[i - 1])
-                align_2.append('-')
+                align_2.append('_')
                 i -= 1
 
         self.alignment = [''.join(reversed(align_1)), ''.join(reversed(align_2))]
 
     def display_matrix(self, word_1, word_2):
-        """Display the edit distance matrix"""
-        print("\nEdit Distance Matrix:")
-        print("     ", end="")
-        print("  ".join([' '] + list(word_2)))
+        """Return the edit distance matrix as a formatted string instead of printing."""
+        output = []
 
+        # Header row
+        header = "    " + "    ".join([' '] + list(word_2))
+        output.append(header)
+
+        # Add dashed separator line
+        dash_length = len(header)
+        output.append("-" * dash_length)
+
+        # Matrix rows
         for i, row in enumerate(self.matrix):
+            # Row label
             if i == 0:
-                print(f"  ", end="")
+                row_label = "  |"
             else:
-                print(f"{word_1[i - 1]} ", end="")
-            print("  ".join(f"{val:2d}" for val in row))
+                row_label = f"{word_1[i - 1]} |"
+
+            # Matrix values
+            row_values = " : ".join(f"{val:2d}" for val in row)
+
+            output.append(row_label + row_values)
+
+        # Return entire matrix as a single string
+        print("\n".join(output))
+        return "\n".join(output)
 
     def display_alignment(self):
-        """Display the optimal alignment"""
-        print("\nOptimal Alignment:")
-        print(self.alignment[0])
-        print(self.alignment[1])
+        alignment_display = f"\nOptimal Alignment: {self.distance}\n {self.alignment[0]}\n {self.alignment[1]}"
+        return alignment_display
 
-        # Show match indicators
-        match_line = ""
-        for c1, c2 in zip(self.alignment[0], self.alignment[1]):
-            if c1 == c2:
-                match_line += "|"
-            elif c1 == '-' or c2 == '-':
-                match_line += " "
-            else:
-                match_line += "x"
-        print(match_line)
 
