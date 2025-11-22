@@ -20,7 +20,7 @@ class Dashboard:
         title_label['font'] = ('Helvetica', 24, 'bold')  # Bigger font
         title_label.grid(column=0, row=0, columnspan=2, pady=20)
         # Dashboard Size
-        self.root.geometry('800x600')
+        self.root.geometry('1000x600')
         # Create all buttons
         self.create_buttons()
         # Text
@@ -33,11 +33,11 @@ class Dashboard:
 
     def create_buttons(self):
         # Exit button
-        ttk.Button(self.dash, text='QUIT', command=self.root.destroy).grid(column=2, row=7)
+        ttk.Button(self.dash, text='QUIT', command=self.root.destroy).grid(column=0, row=9)
         # Submit Button
         ttk.Button(self.dash, text='Submit', command=self.display_results).grid(column=0, row=7)
         # Clear Button
-        ttk.Button(self.dash, text='Clear', command=self.clear_entries).grid(column=1, row=7)
+        ttk.Button(self.dash, text='Clear', command=self.clear_entries).grid(column=0, row=8)
         # Entry boxes
         self.entry_1.grid(column=0, row=3, padx=0, pady=0)
         self.entry_2.grid(column=0, row=4, padx=0, pady=0)
@@ -51,8 +51,8 @@ class Dashboard:
         entry_1 = ttk.Entry(self.dash, width=30)
         entry_2 = ttk.Entry(self.dash, width=30)
 
-        entry_1.grid(column=1, row=1, padx=0, pady=0)
-        entry_2.grid(column=1, row=2, padx=0, pady=0)
+        entry_1.grid(column=0, row=1, padx=0, pady=0)
+        entry_2.grid(column=0, row=2, padx=0, pady=0)
 
         return entry_1, entry_2
 
@@ -84,18 +84,17 @@ class Dashboard:
             text=self.calculate.display_matrix(word_1, word_2)
         )
         matrix_display['font'] = ('Courier New', 8)  # Monospace font
-        matrix_display.grid(column=0, row=5, columnspan=2, pady=20)
+        matrix_display.grid(column=2, row=7, pady=0)
 
         alignment_display = ttk.Label(
             self.dash,
             text=self.calculate.display_alignment()
         )
         alignment_display['font'] = ('Courier New', 8)
-        alignment_display.grid(column=0, row=8, columnspan=2, pady=20)
+        alignment_display.grid(column=2, row=9, pady=0)
 
 
     def clear_entries(self):
         """Clear the entry boxes and result label"""
         self.entry_1.delete(0, END)
         self.entry_2.delete(0, END)
-        # self.result_label.config(text="")
