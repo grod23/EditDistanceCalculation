@@ -1,5 +1,7 @@
 # Edit Distance Calculation
+```
 Program to calculate edit distance/matrix and display using **Tkinter** dashboard. 
+```
 
 **Clone the repository**
 ```bash
