@@ -1,4 +1,5 @@
 # Edit Distance Calculation
+Program to calculate edit distance/matrix and display using **Tkinter** dashboard. 
 **Clone the repository**
 ```bash
 git clone https://github.com/grod23/EditDistanceCalculation.git
