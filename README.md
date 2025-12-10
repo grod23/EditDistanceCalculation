@@ -9,7 +9,7 @@ git clone https://github.com/grod23/EditDistanceCalculation.git
 cd EditDistanceCalculation
 ```
 
-### Create Virtual enviroment
+### Create Virtual environment
 ```python -m venv venv
 source venv/bin/activate       # macOS/Linux
 or
